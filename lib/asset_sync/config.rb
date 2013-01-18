@@ -20,6 +20,7 @@ module AssetSync
     attr_accessor :invalidate
     attr_accessor :cdn_distribution_id
 
+
     # FOG configuration
     attr_accessor :fog_provider          # Currently Supported ['AWS', 'Rackspace']
     attr_accessor :fog_directory         # e.g. 'the-bucket-name'
@@ -29,7 +30,7 @@ module AssetSync
     attr_accessor :aws_access_key_id, :aws_secret_access_key, :aws_reduced_redundancy, :aws_iam_roles
 
     # Rackspace
-    attr_accessor :rackspace_username, :rackspace_api_key, :rackspace_auth_url
+    attr_accessor :rackspace_username, :rackspace_api_key, :rackspace_auth_url, :rackspace_origin, :rackspace_allow_origin
 
     # Google Storage
     attr_accessor :google_storage_secret_access_key, :google_storage_access_key_id
@@ -60,6 +61,8 @@ module AssetSync
       self.run_on_precompile = true
       self.cdn_distribution_id = nil
       self.invalidate = []
+      self.allow_origin = ""
+      self.origin = ""
       load_yml! if defined?(Rails) && yml_exists?
     end
 
@@ -146,6 +149,8 @@ module AssetSync
       self.rackspace_username     = yml["rackspace_username"]
       self.rackspace_auth_url     = yml["rackspace_auth_url"] if yml.has_key?("rackspace_auth_url")
       self.rackspace_api_key      = yml["rackspace_api_key"]
+      self.rackspace_allow_origin           = yml["allow_origin"] if yml.has_key?("allow_origin")
+      self.rackspace_origin                 = yml["origin"] if yml.has_key?("origin")
       self.google_storage_secret_access_key = yml["google_storage_secret_access_key"]
       self.google_storage_access_key_id     = yml["google_storage_access_key_id"]
       self.existing_remote_files  = yml["existing_remote_files"] if yml.has_key?("existing_remote_files")
