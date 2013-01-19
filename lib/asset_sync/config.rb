@@ -63,6 +63,8 @@ module AssetSync
       self.invalidate = []
       self.allow_origin = ""
       self.origin = ""
+      self.rackspace_allow_origin = ""
+      self.rackspace_origin = ""
       load_yml! if defined?(Rails) && yml_exists?
     end
 
